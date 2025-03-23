@@ -1,0 +1,157 @@
+import React, { useEffect, useState } from "react";
+import "./Question.css";
+import { useNavigate } from "react-router";
+import ErrorMsg from "../ErrorMessage/ErrorMsg";
+import { Button, LinearProgress } from "@mui/material";
+import { motion } from "framer-motion"; // ✅ Smooth animations
+
+const Question = ({
+  currQue,
+  setCurrQue,
+  questions,
+  options,
+  correct,
+  setScore,
+  score,
+  setQuestions,
+}) => {
+  const [selected, setSelected] = useState(null);
+  const [error, setError] = useState(false);
+  const [timeLeft, setTimeLeft] = useState(30); // ✅ 30-second timer
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!questions || !questions[currQue]) return;
+
+    const timer = setInterval(() => {
+      setTimeLeft((prev) => {
+        if (prev === 1) {
+          handleTimeout(); // ✅ Auto move with penalty
+        }
+        return prev - 1;
+      });
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, [currQue, questions]);
+
+  // ✅ Function to handle timeout
+  const handleTimeout = () => {
+    setSelected(null);
+    setError(false);
+
+    if (score > 0) setScore(score - 1); // ✅ Reduce score by 1 if not zero
+
+    if (currQue >= questions.length - 1) {
+      navigate("/result"); // ✅ If last question, go to results
+    } else {
+      setCurrQue(currQue + 1);
+      setTimeLeft(30); // ✅ Reset timer
+    }
+  };
+
+  // ✅ Shuffle answer options
+  const shuffleOptions = (options) => {
+    return [...options].sort(() => Math.random() - 0.5);
+  };
+
+  const shuffledOptions = shuffleOptions(options || []);
+
+  // ✅ Handles selecting an answer
+  const handleSelect = (i) => {
+    if (selected === i && selected === correct) return "select";
+    else if (selected === i && selected !== correct) return "wrong";
+    else if (i === correct) return "select";
+  };
+
+  const handleCheck = (i) => {
+    setSelected(i);
+    if (i === correct) setScore(score + 1);
+    setError(false);
+  };
+
+  // ✅ Handles next question logic
+  const handleNext = () => {
+    if (currQue >= questions.length - 1) {
+      navigate("/result"); // ✅ Redirects to result page after last question
+    } else if (selected) {
+      setCurrQue(currQue + 1);
+      setSelected(null);
+      setTimeLeft(30); // ✅ Reset timer
+    } else {
+      setError("Please select an option first!");
+    }
+  };
+
+  // ✅ Quit function - resets state & navigates home
+  const handleQuit = () => {
+    setCurrQue(0);
+    setQuestions([]);
+    navigate("/");
+  };
+
+  return (
+    <div className="question-container">
+      <motion.div
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+        className="progress-bar"
+      >
+        <LinearProgress
+          variant="determinate"
+          value={(currQue / questions.length) * 100}
+        />
+      </motion.div>
+
+      <motion.h1 className="question-title">Question {currQue + 1} of {questions.length}</motion.h1>
+      
+      {/* ✅ Timer with Warning Color */}
+      <h2 className={`timer ${timeLeft <= 5 ? "low-time" : ""}`}>
+        ⏳ Time Left: {timeLeft}s
+      </h2>
+
+      <div className="single-question">
+        <h2>{questions[currQue]?.question || "Loading Question..."}</h2>
+
+        <div className="options">
+          {error && <ErrorMsg>{error}</ErrorMsg>}
+          {shuffledOptions.map((i) => (
+            <button
+              className={`singleOption ${selected && handleSelect(i)}`}
+              key={i}
+              onClick={() => handleCheck(i)}
+              disabled={selected}
+            >
+              {i}
+            </button>
+          ))}
+        </div>
+
+        {/* ✅ Buttons Section */}
+        <div className="controls">
+          <Button
+            variant="contained"
+            color="secondary"
+            size="large"
+            className="quit-btn"
+            onClick={handleQuit}
+          >
+            Quit
+          </Button>
+          <Button
+            variant="contained"
+            color="primary"
+            size="large"
+            className="next-btn"
+            onClick={handleNext}
+          >
+            {currQue >= questions.length - 1 ? "Submit" : "Next Question"}
+          </Button>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default Question;

@@ -1,0 +1,183 @@
+.quiz {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh; /* Full screen height */
+  width: 100vw; /* Full screen width */
+  padding: 10px;
+  text-align: center;
+  box-sizing: border-box;
+  overflow: hidden; /* Prevents page scrolling */
+}
+
+.quiz-container {
+  width: 100%;
+  max-width: 450px;
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start; /* Align content at the top */
+  align-items: center;
+  max-height: 85vh; /* Prevents full-page overflow */
+  gap: 15px;
+  overflow-y: auto; /* 🔥 Allows scrolling only inside the quiz */
+}
+
+/* Scrollbar Styling */
+.quiz-container::-webkit-scrollbar {
+  width: 6px;
+}
+
+.quiz-container::-webkit-scrollbar-thumb {
+  background: #007bff;
+  border-radius: 10px;
+}
+
+.quiz-container::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+.subtitle
+{
+  font-size: 30px;
+  color: #007bff;
+  font-weight: bolder;
+}
+/* ✅ Proper spacing for category & score */
+.quizInfo {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  font-size: 1rem;
+  padding: 10px 0;
+  gap: 15px;
+}
+
+/* Question container */
+.question-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  width: 100%;
+}
+
+/* Question text */
+.question-text {
+  font-size: 1rem;
+  font-weight: bold;
+  max-width: 100%;
+  word-wrap: break-word;
+  text-align: center;
+}
+
+/* Options container */
+.options {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 8px;
+}
+
+/* Option button */
+.option-btn {
+  width: 100%;
+  padding: 10px;
+  font-size: 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.option-btn:hover {
+  transform: scale(1.05);
+}
+
+/* Buttons container */
+.controls {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  gap: 10px;
+  padding-bottom: 10px;
+}
+
+/* Footer */
+.footer {
+  width: 100%;
+  text-align: center;
+  background-color: #007bff;
+  padding: 8px 0;
+  position: fixed;
+  bottom: 0;
+}
+
+/* 🔹 Mobile screen adjustments */
+@media (max-width: 768px) {
+  .quiz-container {
+    width: 90%;
+    height: 85vh; /* Fixed height for mobile */
+    padding: 10px;
+  }
+
+  .subtitle {
+    font-size: 1rem;
+  }
+
+  .quizInfo {
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+  }
+
+  .question-text {
+    font-size: 0.95rem;
+  }
+
+  .option-btn {
+    font-size: 0.9rem;
+    padding: 8px;
+  }
+
+  .controls {
+    flex-direction: column; /* Stack buttons on small screens */
+  }
+
+  .footer {
+    position: fixed;
+    bottom: 0;
+  }
+}
+
+/* 🔹 Fix for larger screens */
+@media (min-width: 1024px) {
+  .quiz-container {
+    max-width: 600px;
+    height: 100vh;
+    padding: 20px;
+  }
+
+  .quizInfo {
+    margin-top: 20px;
+    font-size: 1.5rem;
+    justify-content: space-around;
+    gap: 20px;
+  }
+
+  .question-text {
+    font-size: 1.1rem;
+  }
+
+  .option-btn {
+    font-size: 1.1rem;
+    padding: 12px;
+  }
+
+  .controls {
+    justify-content: space-evenly;
+  }
+}

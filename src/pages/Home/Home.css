@@ -1,0 +1,87 @@
+.home-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100dvh;
+  height: 100%;
+  background: linear-gradient(135deg, #f9f9f9, #e3f2fd);
+  padding: 20px;
+}
+
+/* Flexbox for Row Layout */
+.content-row {
+  display: flex;
+  align-items: center;
+  justify-content: center; /* Center items */
+  width: 90%;
+  max-width: 1000px;
+  gap: 30px;
+}
+.input-field .MuiSelect-select {
+  text-align: left;
+}
+/* Left Side - Centering Form */
+.settings {
+  background: white;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* ✅ Center everything */
+  text-align: center; /* ✅ Center text */
+}
+
+.title {
+  font-size: 28px;
+  font-weight: bold;
+  color: #007bff;
+  margin-bottom: 20px;
+}
+
+.input-field {
+  margin-bottom: 20px !important;
+  width: 100%; /* ✅ Make inputs stretch full width */
+}
+
+.start-btn {
+  background-color: #007bff !important;
+  color: white;
+  font-weight: bold;
+  padding: 10px 20px;
+  transition: transform 0.2s;
+  width: 100%; /* ✅ Full width */
+}
+
+.start-btn:hover {
+  transform: scale(1.05);
+}
+
+/* Right Side - Image */
+.banner-container {
+  width: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.banner {
+  width: 100%;
+  max-width: 400px;
+}
+
+/* ✅ HIDE IMAGE ON MOBILE SCREENS */
+@media (max-width: 768px) {
+  .content-row {
+    flex-direction: column;
+  }
+
+  .settings {
+    width: 100%;
+  }
+
+  .banner-container {
+    display: none; /* Hides the image on mobile screens */
+  }
+}

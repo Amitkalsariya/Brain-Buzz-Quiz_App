@@ -1,0 +1,36 @@
+/* ✅ Ensure Header is Responsive */
+.header {
+  width: 100%;
+  padding: 10px 0;
+  text-align: center;
+  background: linear-gradient(135deg, #4facfe, #00f2fe); /* 🌈 Updated Gradient */
+  color: white;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* ✅ Title Text Styling */
+.title {
+  font-size: clamp(1.4rem, 4vw, 2.2rem);
+  font-weight: bold;
+  text-decoration: none;
+  color: white;
+}
+
+.title span {
+  color: #ffca28; /* Yellow Highlight */
+}
+
+/* ✅ Make Header Adjust on Small Screens */
+@media (max-width: 768px) {
+  .header {
+    padding: 8px 0;
+  }
+
+  .title {
+    font-size: 1.6rem;
+  }
+}
